@@ -1,11 +1,362 @@
 <!DOCTYPE html>
-  <html>
-  <head>
-   <title>Mi Primera Página</title>
-       </head>
-        <body>
-     <h1>Bienvenido a mi página</h1>
-      <p>Este es mi primer intento de crear una página web.</p>
-    <a href="https://www.ejemplo.com">Visita Ejemplo</a>
-  </body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💘 Feliz San Valentín</title>
+  <style>
+    :root{
+      --bg1:#ffdde1;
+      --bg2:#ee9ca7;
+      --card:#ffffffcc;
+      --text:#2b2b2b;
+      --accent:#ff3b6b;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+      overflow:hidden;
+    }
+
+    /* Corazones flotando */
+    .hearts{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .heart{
+      position:absolute;
+      width:14px;
+      height:14px;
+      background:var(--accent);
+      transform: rotate(45deg);
+      opacity:.65;
+      animation: floatUp linear infinite;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
+    }
+    .heart::before,
+    .heart::after{
+      content:"";
+      position:absolute;
+      width:14px;
+      height:14px;
+      background:var(--accent);
+      border-radius:50%;
+    }
+    .heart::before{ left:-7px; top:0; }
+    .heart::after{ top:-7px; left:0; }
+
+    @keyframes floatUp{
+      from{ transform: translateY(110vh) rotate(45deg); }
+      to{ transform: translateY(-20vh) rotate(45deg); }
+    }
+
+    .wrap{
+      width:min(920px, 92vw);
+      display:grid;
+      gap:18px;
+      grid-template-columns: 1.1fr .9fr;
+      align-items:stretch;
+    }
+
+    .card{
+      background:var(--card);
+      backdrop-filter: blur(10px);
+      border:1px solid rgba(255,255,255,.6);
+      border-radius:22px;
+      padding:28px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.15);
+      position:relative;
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(28px, 4.5vw, 46px);
+      letter-spacing:-.02em;
+    }
+    .sub{
+      margin:0 0 18px;
+      font-size: clamp(14px, 2.4vw, 18px);
+      opacity:.9;
+      line-height:1.45;
+    }
+
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(255,59,107,.12);
+      border: 1px solid rgba(255,59,107,.25);
+      color: #b1002c;
+      font-weight:600;
+      margin-bottom:14px;
+    }
+
+    .big-heart{
+      width:120px;
+      height:120px;
+      margin: 14px 0 4px;
+      position:relative;
+      transform: rotate(45deg);
+      background: var(--accent);
+      border-radius: 16px;
+      animation: pulse 1.2s ease-in-out infinite;
+      box-shadow: 0 18px 40px rgba(255,59,107,.35);
+    }
+    .big-heart::before,
+    .big-heart::after{
+      content:"";
+      position:absolute;
+      width:120px;
+      height:120px;
+      background:var(--accent);
+      border-radius:50%;
+    }
+    .big-heart::before{ left:-60px; top:0; }
+    .big-heart::after{ left:0; top:-60px; }
+
+    @keyframes pulse{
+      0%,100%{ transform: rotate(45deg) scale(1); }
+      50%{ transform: rotate(45deg) scale(1.07); }
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:700;
+      font-size:15px;
+      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .primary{
+      background: var(--accent);
+      color:#fff;
+      box-shadow: 0 14px 30px rgba(255,59,107,.35);
+    }
+    .primary:hover{ box-shadow: 0 18px 36px rgba(255,59,107,.45); }
+    .secondary{
+      background: rgba(255,255,255,.7);
+      border:1px solid rgba(0,0,0,.08);
+      color:#333;
+    }
+    button:active{ transform: scale(.98); }
+
+    .side{
+      display:grid;
+      gap:14px;
+      align-content:start;
+    }
+
+    .note{
+      font-size:15px;
+      line-height:1.55;
+      margin:0;
+    }
+
+    .input{
+      display:grid;
+      gap:8px;
+      margin-top:8px;
+    }
+    label{
+      font-weight:700;
+      font-size:14px;
+      opacity:.9;
+    }
+    input{
+      width:100%;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.12);
+      outline:none;
+      font-size:15px;
+      background: rgba(255,255,255,.75);
+    }
+    input:focus{ border-color: rgba(255,59,107,.55); box-shadow: 0 0 0 4px rgba(255,59,107,.15); }
+
+    .msg{
+      margin-top:10px;
+      padding:14px 16px;
+      border-radius:16px;
+      background: rgba(255,59,107,.10);
+      border:1px dashed rgba(255,59,107,.35);
+      min-height:56px;
+      display:flex;
+      align-items:center;
+      font-weight:600;
+    }
+
+    .footer{
+      margin-top:12px;
+      font-size:12px;
+      opacity:.75;
+    }
+
+    @media (max-width: 860px){
+      .wrap{ grid-template-columns: 1fr; }
+      .big-heart{ margin-inline:auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts" id="hearts"></div>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="badge">💌 Para alguien especial</div>
+      <h1 id="title">Feliz San Valentín 💘</h1>
+      <p class="sub" id="subtitle">
+        Hoy solo quería recordarte algo simple: <b>me haces feliz</b>.
+        Gracias por existir y por iluminar mis días.
+      </p>
+
+      <div class="big-heart" aria-hidden="true"></div>
+
+      <div class="actions">
+        <button class="primary" onclick="showSurprise()">🎁 Ver sorpresa</button>
+        <button class="secondary" onclick="makeConfetti()">✨ Más amor</button>
+      </div>
+
+      <p class="footer">Hecho con cariño — (puedes personalizar nombres abajo) 💗</p>
+    </section>
+
+    <aside class="card side">
+      <h2 style="margin:0;font-size:20px;">Personaliza tu carta ✍️</h2>
+
+      <div class="input">
+        <label for="to">Para:</label>
+        <input id="to" placeholder="Ej: Alejandra" />
+      </div>
+
+      <div class="input">
+        <label for="from">De:</label>
+        <input id="from" placeholder="Ej: Hugo" />
+      </div>
+
+      <div class="input">
+        <label for="line">Frase corta:</label>
+        <input id="line" placeholder="Ej: Contigo, todo es bonito ✨" />
+      </div>
+
+      <button class="primary" onclick="applyText()">💞 Actualizar mensaje</button>
+
+      <div class="msg" id="msgBox">Escribe arriba y presiona “Actualizar mensaje”.</div>
+
+      <p class="note">
+        Tip: si lo subes a GitHub Pages, este archivo debe llamarse <b>index.html</b>.
+      </p>
+    </aside>
+  </main>
+
+  <script>
+    // Generar corazones flotando
+    const heartsContainer = document.getElementById("hearts");
+    function spawnHeart(){
+      const h = document.createElement("div");
+      h.className = "heart";
+      const left = Math.random() * 100;
+      const size = 10 + Math.random() * 16;
+      const duration = 4 + Math.random() * 6;
+      h.style.left = left + "vw";
+      h.style.width = size + "px";
+      h.style.height = size + "px";
+      h.style.animationDuration = duration + "s";
+      h.style.opacity = (0.35 + Math.random() * 0.5).toFixed(2);
+      heartsContainer.appendChild(h);
+      setTimeout(() => h.remove(), duration * 1000);
+    }
+    setInterval(spawnHeart, 220);
+
+    // Personalizar texto
+    function applyText(){
+      const to = document.getElementById("to").value.trim();
+      const from = document.getElementById("from").value.trim();
+      const line = document.getElementById("line").value.trim();
+
+      const title = document.getElementById("title");
+      const sub = document.getElementById("subtitle");
+      const msg = document.getElementById("msgBox");
+
+      title.textContent = to ? `Feliz San Valentín, ${to} 💘` : "Feliz San Valentín 💘";
+
+      if(line){
+        sub.innerHTML = `Hoy solo quería decirte: <b>${escapeHtml(line)}</b> 💗`;
+      }else{
+        sub.innerHTML = `Hoy solo quería recordarte algo simple: <b>me haces feliz</b>.
+        Gracias por existir y por iluminar mis días.`;
+      }
+
+      msg.textContent = to || from
+        ? `Para ${to || "ti"}: gracias por todo. — Con amor, ${from || "alguien que te quiere"} 💞`
+        : "Mensaje actualizado 💕";
+    }
+
+    // Sorpresa
+    function showSurprise(){
+      const to = document.getElementById("to").value.trim();
+      const from = document.getElementById("from").value.trim();
+      const msg = document.getElementById("msgBox");
+
+      msg.textContent = `🎉 ${to ? to + ", " : ""}¿quieres ser mi San Valentín? 💘 — ${from || "💗"}`;
+      makeConfetti();
+    }
+
+    // Confetti simple con emojis
+    function makeConfetti(){
+      const emojis = ["💖","💘","💝","💗","✨","🌹"];
+      for(let i=0;i<28;i++){
+        const s = document.createElement("span");
+        s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        s.style.position = "fixed";
+        s.style.left = (Math.random()*100) + "vw";
+        s.style.top = "-10px";
+        s.style.fontSize = (14 + Math.random()*18) + "px";
+        s.style.opacity = "0.9";
+        s.style.pointerEvents = "none";
+        s.style.transform = `translateY(0) rotate(${Math.random()*90}deg)`;
+        document.body.appendChild(s);
+
+        const fall = 120 + Math.random()*120;
+        const drift = (Math.random()*2 - 1) * 80;
+        const dur = 900 + Math.random()*900;
+
+        s.animate([
+          { transform: `translate(0,0) rotate(0deg)`, opacity: 0.9 },
+          { transform: `translate(${drift}px, ${fall}vh) rotate(240deg)`, opacity: 0 }
+        ], { duration: dur, easing: "cubic-bezier(.2,.8,.2,1)" });
+
+        setTimeout(() => s.remove(), dur);
+      }
+    }
+
+    // Evitar inyección en innerHTML
+    function escapeHtml(str){
+      return str
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+  </script>
+</body>
 </html>
